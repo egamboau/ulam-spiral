@@ -1,4 +1,3 @@
-from pydoc import ispackage
 import numpy as np
 
 import concurrent.futures
