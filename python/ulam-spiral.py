@@ -74,13 +74,21 @@ def get_position_on_spiral_for_number(n:int, x_center:int, y_center:int):
             y += y_offset
             x += x_offset
 
-        #check if this number is prime, we can reuse some of the math operations used for this calculation
-        is_prime = True
-        for current_number in range(2, complete_squares + 1):
-            if n % current_number == 0:
-                #found a factor, the number is not prime
-                is_prime = False
-                break
+        ##if the number is 2 or 3, the number is prime. 
+        # Also, if the number not divisible by 2 or 3, the number is prime 
+        is_prime = n <= 3 or (n%2 and n%3)
+        if is_prime:
+            ##check with the formula 6k+-1.
+            ##the first value is (6*1) - 1, which is 5
+            ##also, (6*1) + 1, which is 7, or 5 + 2
+            current_value = 5
+            while current_value <= complete_squares:
+                if not n % current_value or not n % (current_value + 2):
+                    #found a factor, the number is not prime
+                    is_prime = False
+                    break
+                ##Adding 1 to k is the same as adding 6 to the current value.
+                current_value += 6
         return (y,x,is_prime)
 
 def main(array_size):
@@ -106,9 +114,9 @@ def main(array_size):
     #as it goes. 
     def populate_array_based_on_result(task_result:concurrent.futures.Future):
         task_info = futures[task_result]
-        log.info(f"Completed task for number {task_info}")
         x,y,n_is_prime =  task_result.result()
         array[x][y] = "*" if n_is_prime else "-"
+        log.info(f"Completed task for number {task_info}, is prime: {bool(n_is_prime)}")
 
 
     with concurrent.futures.ProcessPoolExecutor(multiprocessing.cpu_count()) as executor:

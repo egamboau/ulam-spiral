@@ -1,4 +1,3 @@
-
 # Calculating the position of the number
 The idea for this part, is to get a position, determine by X and Y coordinates, for a given number, and simulate "walking" over the spiral until the position is reached. However, for efficiency, is better to use math and calculate, rather than for loops for the actual traversal.
 

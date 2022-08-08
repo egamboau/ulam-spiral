@@ -17,4 +17,4 @@ This is NOT intended to be a benchmarking tool for the languages and platforms h
 ## The algorithm
 The program has two main parts, the Prime number detection, and the calculation of the position on the spiral. As this program will use background threads, it is necessary to know where in memory to put the result of the prime checker, as the order of arrival of the terms is not determined. 
 
-There are two files included in the root directory, Spiral Generation.md, and Prime Numbers.md, which explain the algorithm in detail, if implementation details is needed. 
+There are two files included in the root directory, Spiral Generation.md, and Prime Numbers.md, which explain the algorithm in detail, if implementation details are needed. 
