@@ -18,6 +18,7 @@ $$
 $$
 
 This is the trivial case, as it is just 1 nunmber, and 1 position. However, in case of a $2x2$ matrix, things change a bit:
+
 $$
 \begin{pmatrix}
 4 & 3 \\
@@ -26,6 +27,7 @@ $$
 $$
 
 One key fact that can be determined here, is that the origin from the spiral shifted a bit, is not on the real center of the matrix. However, checking a $3x3$ matrix:
+
 $$
 \begin{pmatrix}
 5 & 4 & 3 \\
@@ -35,6 +37,7 @@ $$
 $$
 
 The origin is now the center of the matrix. Following this pattern, to get the coordinates for the origin of the spiral $(x_o,y_o)$ of a given matrix size, the formula is as follows:
+
 $$
 \begin{align}
 x_o = \begin{cases}
@@ -50,6 +53,7 @@ y_o = \begin{cases}
 $$
 
 Using the formulas to get the center on our samples:
+
 $$
 \begin{align*}
 \text{For }n = 1 : &&
@@ -73,9 +77,10 @@ Which matches the samples shown.
 
 To get where a given number $z$ will be stored when the path is traversed, two components are needed:
 1. How many perfect squares we have on $z$. We will call this number $s$, and it must satisfy that $s^2$ is the nearest to $z$, and also, $s^2 < z$
-2. The difference $d = z - s^2 $ so we can calculate the final steps. 
+2. The difference $d = z - s^2$ so we can calculate the final steps. 
 
 For this section, take into account a $6x6$ matrix M:
+
 $$
 M = \begin{pmatrix}
 36 & 35 & 34 & 33 & 32 & 31 \\
@@ -96,6 +101,7 @@ For this:  $s = \lfloor\sqrt{z}\rfloor$
 ### Calculate the x component for the position of s in the spiral
 
 For a given number $s$, and the spiral origin $(x_o,y_o)$, the following values $(x_{s},y_s)$ can be calculated
+
 $$
 \begin{align*}
 \text{for } s &= 1, x_s = x_o \\
@@ -108,11 +114,12 @@ $$
 $$
 
 Based on the pattern, we can derive the following formula:
+
 $$
 \begin{align}
 x_s = \begin{cases}
         x_o & \text{if } s = 1 \text{ or } s=2 \\
-        x_o + \sum_{i = 1}^{s - 2} -1^{i+1}i & \text{if } s \gt 2\\
+        x_o + \sum\limits_{i = 1}^{s - 2} -1^{i+1}i & \text{if } s \gt 2\\
     \end{cases}
 \end{align}
 $$
@@ -129,6 +136,7 @@ $$
 ### Calculate the y component for the position of s in the spiral
 
 Likewise, for a given number $s$, the component $y_s$ can be generated as follows:
+
 $$
 \begin{align*}
 \text{for } s &= 1, y_s = x_o \\
@@ -141,13 +149,13 @@ $$
 $$
 
 Which, again following the pattern, can be rewritten to:
+
 $$
 \begin{align}
 y_s = \begin{cases}
         y_o & \text{if } s = 1 \\
-        y_o - \sum_{i = 1}^{s - 1} -1^{i+1}i & \text{if } s \gt 1\\
+        y_o - \sum\limits_{i = 1}^{s - 1} -1^{i+1}i & \text{if } s \gt 1\\
     \end{cases}
-
 \end{align}
 $$
 
@@ -156,6 +164,7 @@ $$
 With $s$ calculated, and the position $(x_s, y_s)$ retrieved, the next step is to get the offset for the numbers, this time, from $(x_s and y_s)$:
 
 As stated above, first we got the distance between the number $z$ and the square number $s^2$: 
+
 $$
 \begin {align}
 d = z - s^2
@@ -195,16 +204,19 @@ We can verify again if we got $s = 4$:
 3. The colums go left until $24$ which is $(21 + 4 - 1)$
 
 Using this, we can work out the final positions $(x_d, y_d)$ for any $s$, given that $s$ is even, as follows:
+
 $$
-x_d = \begin{cases}
+\begin{align*}
+x_d &= \begin{cases}
         x_s - 1 & \text{if } d \leq s - 1  \\
         x_s - 1 + d - s  - 1 & \text{otherwise.} 
     \end{cases}
 \\
-y_d = \begin{cases}
+y_d &= \begin{cases}
         y_s + d  - 1 & \text{if } d \leq s^2 - 1  \\
         y_s + s & \text{otherwise.} 
     \end{cases}
+\end{align*}
 $$
 
 Now, let's assume a value $s = 3$. Placing the numbers from 10 15 shows us that:
@@ -226,29 +238,35 @@ For the next odd value of $s = 5$, the pattern holds:
 * The colum decreases again until $35$ which is $31 + 5 - 1$
 
 With this, the following formulas can be derived:
+
 $$
-x_d = \begin{cases}
+\begin{align*}
+x_d &= \begin{cases}
         x_s + 1 & \text{if } d \leq s - 1  \\
         x_s + 1 - d - s  - 1 & \text{otherwise.} 
     \end{cases}
 \\
-y_d = \begin{cases}
+y_d &= \begin{cases}
         y_s - d  + 1 & \text{if } d \leq s - 1  \\
         y_s - s & \text{otherwise.} 
     \end{cases}
+\end{align*}
 $$
 
 The two expresions can be fused, as the only changes from those formulas are signs, which can be easily flipped over with exponents:
+
 $$
-x_d = \begin{cases}
+\begin{align*}
+x_d &= \begin{cases}
         x_s + (1)(-1)^{s + 1} & \text{if } d \leq s - 1  \\
         x_s + 1(-1)^{s + 1} + (d - s  - 1)(-1)^{s} & \text{otherwise.} \\
     \end{cases}
 \\
-y_d = \begin{cases}
+y_d &= \begin{cases}
         y_s + (d + 1)(-1)^{s + 1} & \text{if } d \leq s - 1  \\
         y_s - (s)(-1)^{s + 1} & \text{otherwise.} 
     \end{cases}
+\end{align*}
 $$
 
 With this, we got the coordinates $(x_s,y_s)$ needed for the placement of the number. Repeating this for all the numbers on the possible values, the spiral will be formed. 
@@ -258,19 +276,19 @@ With this, we got the coordinates $(x_s,y_s)$ needed for the placement of the nu
 Let's calculate some values from a matrix, to check that the correct positions are beign generated correcly. As we havve been using on this document, let's calculate different numbers for a $6x6$ matrix. 
 
 ## Spiral Origin
+
 $$
 \begin{align*}
 x_o &= \begin{cases}
         \lfloor \frac {n}{2} \rfloor & \text{if n is odd} \\
         \frac {n}{2} -1 & \text{otherwise} \\
     \end{cases} \\
-
     &= \frac {6}{2} -1 \\
     &= 3 - 1 \\
     &= 2
-
 \end{align*}
 $$
+
 $$
 \begin{align*}
 y_o &= \begin{cases}
@@ -293,28 +311,31 @@ s &= \lfloor\sqrt{1}\rfloor \\
   &= 1
 \end{align*}
 $$
+
 For $(x_s,y_s)$:
+
 $$
 \begin{align*}
 x_s &= \begin{cases}
         x_o & \text{if } s = 1 \text{ or } s=2 \\
-        x_o + \sum_{i = 1}^{s - 2} -1^{i+1}i & \text{if } s \gt 2\\
+        x_o + \sum\limits_{i = 1}^{s - 2} -1^{i+1}i & \text{if } s \gt 2\\
     \end{cases} \\
     &=x_o \\
     &= 2
 \\
 y_s &= \begin{cases}
         y_o & \text{if } s = 1 \\
-        x_o + \sum_{i = 1}^{s - 1} -1^{i+1}i & \text{if } s \gt 1\\
+        x_o + \sum\limits_{i = 1}^{s - 1} -1^{i+1}i & \text{if } s \gt 1\\
     \end{cases} \\
     &= y_o \\
     &= 3
-
 \end{align*}
 $$
+
 So, $(x_s,y_s) = (2,3)$
 
 Finally: 
+
 $$
 \begin{align*}
 d &= z - s^2 \\
@@ -322,25 +343,29 @@ d &= z - s^2 \\
   &= 0
 \end{align*}
 $$
+
 As $d = 0$, the number the final position for the number is $(x_s,y_s) = (2,3)$, matching the origin of the spiral, as expected.
 
 ## Position for number 33
 Now, let's calculate something not as trivial, the number 33 on the matrix:
+
 $$
 \begin{align*}
 s &= \lfloor\sqrt{33}\rfloor \\
   &= 5
 \end{align*}
 $$
+
 For $(x_s,y_s)$:
+
 $$
 \begin{align*}
 x_s &= \begin{cases}
         x_o & \text{if } s = 1 \text{ or } s=2 \\
-        x_o + \sum_{i = 1}^{s - 2} -1^{i+1}i & \text{if } s \gt 2\\
+        x_o + \sum\limits_{i = 1}^{s - 2} -1^{i+1}i & \text{if } s \gt 2\\
     \end{cases} \\
-    &= 2 + \sum_{i = 1}^{5 - 2} -1^{i+1}i\\
-    &= 2 + \sum_{i = 1}^{3} -1^{i+1}i\\
+    &= 2 + \sum\limits_{i = 1}^{5 - 2} -1^{i+1}i\\
+    &= 2 + \sum\limits_{i = 1}^{3} -1^{i+1}i\\
     &= 2 + \begin{cases}
                              \frac{-n}{2} & \text{if n is even} \\
                              \frac{n+1}{2} & \text{if n is odd}\\
@@ -352,7 +377,7 @@ x_s &= \begin{cases}
 \\
 y_s &= \begin{cases}
         y_o & \text{if } s = 1 \\
-        y_o - \sum_{i = 1}^{s - 1} -1^{i+1}i & \text{if } s \gt 1\\
+        y_o - \sum\limits_{i = 1}^{s - 1} -1^{i+1}i & \text{if } s \gt 1\\
     \end{cases} \\
     &= 3 - \sum_{i = 1}^{5 - 1} -1^{i+1}i \\
     &= 3 - \sum_{i = 1}^{4} -1^{i+1}i \\
@@ -363,12 +388,13 @@ y_s &= \begin{cases}
     &= 3 - \frac{-4}{2}\\
     &= 3 - -2\\
     &= 5\\
-
-\end{align*}
+\end{align*}\
 $$
+
 So, $(x_s,y_s) = (4,5)$
 
 Finally: 
+
 $$
 \begin{align*}
 d &= z - s^2 \\
@@ -379,9 +405,9 @@ d &= z - s^2 \\
 $$
 
 As $d \ne 0$, we need some extra calculations:
+
 $$
 \begin{align*}
-
 x_d &= \begin{cases}
         x_s + (1)(-1)^{s + 1} & \text{if } 8 \leq 5 - 1  \\
         x_s + 1(-1)^{s + 1} + (d - s  - 1)(-1)^{s} & \text{otherwise.}
@@ -393,7 +419,6 @@ x_d &= \begin{cases}
     &= 4 + 1 - 2 \\
     &= 3 \\
 \\
-
 y_d &= \begin{cases}
         y_s + (d + 1)(-1)^{s + 1} & \text{if } 8 \leq 5 - 1  \\
         y_s - (s)(-1)^{s + 1} & \text{otherwise.} 
@@ -411,21 +436,24 @@ So, the position $(x,y)$ for the number 33 is $(3,0)$, matching the position bas
 ## Position for number 24
 
 As a last sample, let's calcualte the position for number 24:
+
 $$
 \begin{align*}
 s &= \lfloor\sqrt{24}\rfloor \\
   &= 4
 \end{align*}
 $$
+
 For $(x_s,y_s)$:
+
 $$
 \begin{align*}
 x_s &= \begin{cases}
         x_o & \text{if } s = 1 \text{ or } s=2 \\
-        x_o + \sum_{i = 1}^{s - 2} -1^{i+1}i & \text{if } s \gt 2\\
+        x_o + \sum\limits_{i = 1}^{s - 2} -1^{i+1}i & \text{if } s \gt 2\\
     \end{cases} \\
-    &= 2 + \sum_{i = 1}^{4 - 2} -1^{i+1}i\\
-    &= 2 + \sum_{i = 1}^{2} -1^{i+1}i\\
+    &= 2 + \sum\limits_{i = 1}^{4 - 2} -1^{i+1}i\\
+    &= 2 + \sum\limits_{i = 1}^{2} -1^{i+1}i\\
     &= 2 + \begin{cases}
                              \frac{-n}{2} & \text{if n is even} \\
                              \frac{n+1}{2} & \text{if n is odd}\\
@@ -448,12 +476,13 @@ y_s &= \begin{cases}
     &= 3 - \frac{4}{2}\\
     &= 3 - 2\\
     &= 1\\
-
 \end{align*}
 $$
+
 So, $(x_s,y_s) = (1,1)$
 
 Finally: 
+
 $$
 \begin{align*}
 d &= z - s^2 \\
@@ -464,9 +493,9 @@ d &= z - s^2 \\
 $$
 
 As $d \ne 0$, we need some extra calculations:
+
 $$
 \begin{align*}
-
 x_d &= \begin{cases}
         x_s + (1)(-1)^{s + 1} & \text{if } 8 \leq 4 - 1  \\
         x_s + 1(-1)^{s + 1} + (d - s  - 1)(-1)^{s} & \text{otherwise.}
@@ -477,9 +506,7 @@ x_d &= \begin{cases}
     &= 1 + -1 + (8 - 4  - 1) \\
     &= 1 - 1 + 3 \\
     &= 3 \\
-    
 \\
-
 y_d &= \begin{cases}
         y_s + (d + 1)(-1)^{s + 1} & \text{if } 8 \leq 4 - 1  \\
         y_s - (s)(-1)^{s + 1} & \text{otherwise.} 
@@ -490,7 +517,6 @@ y_d &= \begin{cases}
     &= 1 - -4\\
     &= 1 + 4\\
     &= 5\\
-
 \end{align*}
 $$
 
