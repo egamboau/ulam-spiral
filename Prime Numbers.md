@@ -29,7 +29,7 @@ Also, all primes greater than $n\\#$ can be represented in the form $n\\# \times
 
 By using $3\\# = 6$, we can represent the numbers with $6 \times k + i$, for $i$ in $i = 0,1,2,3,4,5$. However, $2$ divides $6 \times k + 0$, $6 \times k + 2$ and $6 \times k + 4$, Furhtermore, $3$ divides $6 \times k + 3$. This leave us only with the formula  $6 \times k + 1$, which will represent all of the primes greather than 6. Note that this also generates composite numbers, so the test needs to be performed. However, it will automatically ignore already tested factors. 
 
-Another way to make the comparison shorter, instead of checking $ 1 \le i \le n\\#$, the test can be performed on $ 1 \le i \le \frac{n\\#}{2}$, and change the formula to $6 \times k \pm 1$. 
+Another way to make the comparison shorter, instead of checking $1 \le i \le n\\#$, the test can be performed on $1 \le i \le \frac{n\\#}{2}$, and change the formula to $6 \times k \pm 1$. 
 
 ### The algorithm. 
 
