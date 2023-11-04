@@ -7,6 +7,18 @@ const { ArgumentParser } = require('argparse');
 const Piscina = require('piscina');
 const EventEmitter = require('events');
 
+const winston = require('winston');
+
+const logger =  winston.createLogger({
+    level: 'info',
+    format: winston.format.simple(),
+    transports: [
+        new winston.transports.Console({
+            stderrLevels:["info"]
+        })
+    ]
+})
+
 async function main(size) {
     // to hold our data. As this exercise is just for numbers greater than 1, fill with 0 will give us a good way
     // to know when a cell is empty
@@ -49,7 +61,7 @@ async function main(size) {
 
         let task_result = piscina.run({number:currentTask, x_center: xCenter, y_center: yCenter})
             .then((result) => {
-                console.error(`Completed task for number ${result.number}, is prime: ${result.n_is_prime})`)
+                logger.info(`Completed task for number ${result.number}, is prime: ${result.n_is_prime})`)
                 array[result.y][result.x] = result.n_is_prime? "*" : "-"
             })
         currentTask += 1
@@ -58,7 +70,7 @@ async function main(size) {
     }
 
     Promise.all(submittedTasks).then(() => {
-        console.error("Task completed!!")
+        logger.info("Task completed!!")
         let joined_values = array.map(array_object => array_object.join(""))
         joined_values = joined_values.join("\n")
         console.log(joined_values)

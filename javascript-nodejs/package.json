@@ -26,6 +26,7 @@
   "homepage": "https://github.com/egamboau/ulam-spiral#readme",
   "dependencies": {
     "argparse": "^2.0.1",
-    "piscina": "^4.1.0"
+    "piscina": "^4.1.0",
+    "winston": "^3.11.0"
   }
 }
