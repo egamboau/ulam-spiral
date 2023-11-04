@@ -161,7 +161,7 @@ $$
 
 ### Getting the final position. 
 
-With $s$ calculated, and the position $(x_s, y_s)$ retrieved, the next step is to get the offset for the numbers, this time, from $(x_s and y_s)$:
+With $s$ calculated, and the position $(x_s, y_s)$ retrieved, the next step is to get the offset for the numbers, this time, from $x_s$ and $y_s$:
 
 As stated above, first we got the distance between the number $z$ and the square number $s^2$: 
 

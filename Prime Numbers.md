@@ -21,7 +21,7 @@ $$
 n\\# = \begin{cases}
         1 & \text{if } n = 0,1 \\
         (n-1)\\# \times n & \text{if n is prime} \\
-        (n-1)\\# \times n & \text{if n is not prime} \\
+        (n-1)\\# \times & \text{if n is not prime} \\
     \end{cases}
 $$
 
