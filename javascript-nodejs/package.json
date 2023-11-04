@@ -1,0 +1,31 @@
+{
+  "name": "ulam-spiral",
+  "version": "1.0.0",
+  "description": "Ulam Spiral implementation on NodeJS",
+  "main": "bin/ulam-spiral.js",
+  "bin": {
+    "ulam-spiral": "./bin/ulam-spiral.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/egamboau/ulam-spiral.git"
+  },
+  "keywords": [
+    "ulam",
+    "spiral",
+    "nodejs"
+  ],
+  "author": "Eduardo Gamboa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/egamboau/ulam-spiral/issues"
+  },
+  "homepage": "https://github.com/egamboau/ulam-spiral#readme",
+  "dependencies": {
+    "argparse": "^2.0.1",
+    "piscina": "^4.1.0"
+  }
+}
