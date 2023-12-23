@@ -1,0 +1,13 @@
+name = "ulam_spiral"
+description = "Shiny new project"
+version = "0.1.0-dev"
+
+authors = ["Eduardo Gamboa"]
+maintainers = ["Eduardo Gamboa <egamboau@gmail.com>"]
+maintainers-logins = ["egamboau"]
+
+executables = ["ulam_spiral"]
+[[depends-on]]
+parse_args = "~0.9.0"
+[[depends-on]]
+gnatcoll = "^23.0.0"
