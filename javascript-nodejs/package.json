@@ -7,7 +7,7 @@
     "ulam-spiral": "./bin/ulam-spiral.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --detectOpenHandles"
   },
   "repository": {
     "type": "git",
@@ -28,5 +28,8 @@
     "argparse": "^2.0.1",
     "piscina": "^4.1.0",
     "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
