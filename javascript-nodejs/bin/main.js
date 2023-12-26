@@ -58,7 +58,8 @@ async function main(size) {
         }
 
         let task_result = piscina.run({number:currentTask, x_center: xCenter, y_center: yCenter})
-            .then((result) => {                
+            .then((result) => {
+                logger.info(`Completed task for number ${result.number}, is prime: ${result.n_is_prime})`)            
                 array[result.y][result.x] = result
             })
         currentTask += 1
@@ -77,7 +78,7 @@ async function main(size) {
 
 function joinArray(array) {
 
-    formatRow = function(row) {
+    const formatRow = function(row) {
         return row.map((element) => element.n_is_prime?'*':'-' ).join("")
     }
 
