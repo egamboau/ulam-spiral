@@ -38,7 +38,7 @@ def calculate_first_natural_numbers_alternate_series(n:int) -> int:
 def get_position_on_spiral_for_number(n:int, x_center:int, y_center:int):
     
     if n == 1:
-        return (y_center,x_center, False)
+        return {"number": n, "x": x_center, "y": y_center, "n_is_prime": False}
     else:
         #Check how many squares we had completed. ith this, we can check where the number should be
         #by "walking" on the spiral
@@ -89,13 +89,13 @@ def get_position_on_spiral_for_number(n:int, x_center:int, y_center:int):
                     break
                 ##Adding 1 to k is the same as adding 6 to the current value.
                 current_value += 6
-        return (y,x,is_prime)
+        return {"number": n, "x": x, "y": y, "n_is_prime": is_prime}
 
 def main(array_size):
     #to hold our data. As this exercise is just for numbers greater than 1, fill with 0 will give us a good way
     # to know when a cell is emptu
 
-    array = np.zeros(shape=(array_size, array_size), dtype="U1")
+    array = [[0 for i in range(array_size)] for j in range(array_size)]
 
     ##the center of the spiral changes, if the number is even or odd. Odd numbers need to be adjusted a bit, so the center is still ok
     quotient, reminder = np.divmod(array_size, 2)
@@ -114,9 +114,9 @@ def main(array_size):
     #as it goes. 
     def populate_array_based_on_result(task_result:concurrent.futures.Future):
         task_info = futures[task_result]
-        x,y,n_is_prime =  task_result.result()
-        array[x][y] = "*" if n_is_prime else "-"
-        log.info(f"Completed task for number {task_info}, is prime: {bool(n_is_prime)}")
+        task_result =  task_result.result()
+        array[task_result["y"]][task_result["x"]] = task_result
+        log.info(f"Completed task for number {task_info}, is prime: {bool(task_result["n_is_prime"])}")
 
 
     with concurrent.futures.ProcessPoolExecutor(multiprocessing.cpu_count()) as executor:
@@ -126,14 +126,20 @@ def main(array_size):
             future_task.add_done_callback(populate_array_based_on_result)
             futures[future_task] = number
         executor.shutdown(wait=True, cancel_futures=False)
-            
+    return array
 
-    rows_joined = ["".join(row) for row in array]
-    rows_joined = '\n'.join(rows_joined) 
-    print(rows_joined)
+def join_array(spiral):
+    def transform_row_to_str(row):
+        return "".join(map(lambda element: '*' if element.get("n_is_prime") else '-', row))
+    
+
+    rows_joined = map(transform_row_to_str, spiral)
+    return '\n'.join(rows_joined) 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Prints Ulam spiral on screen. Logs to stderr so output can be redirected')
     parser.add_argument('size', metavar='N', type=int, help="The size of the side of the square. The spiral will be of size N squared")
     args = parser.parse_args()
-    main(args.size)
+    array = main(args.size)
+
+    print(join_array(array))
