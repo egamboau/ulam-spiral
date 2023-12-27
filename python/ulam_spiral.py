@@ -59,17 +59,18 @@ def get_position_on_spiral_for_number(n:int, x_center:int, y_center:int):
         ##if the distance is 0, we already have x and y to return, using the previous calculations.
         ##however, we need to "walk" over the spiral to cover any other gap
         if distance_from_last_square != 0:
-            #for odd numbers, the sign of the offsets need to be negative. as True is considered 1, raising 
-            #-1 to the value of the isOdd function, we get a positive/negative flip
-            is_odd_number = isOdd(complete_squares)
-            sign_constant = np.power(-1, is_odd_number)
+            y_offset = -1
+            x_offset = -1
             ##the walk direction changes if the complete squares is even, or odd.
             if distance_from_last_square <= complete_squares +1:
-                y_offset = np.multiply((distance_from_last_square -1), sign_constant)
-                x_offset = -sign_constant
+
+                x_offset = np.power(-1, complete_squares + 1)
+                y_offset = distance_from_last_square* (np.power(-1, complete_squares)) + (np.power(-1, (complete_squares + 1)))
+
             else:
-                x_offset = np.multiply(np.subtract(distance_from_last_square, np.sum((complete_squares,1))), sign_constant) - sign_constant
-                y_offset = np.multiply(complete_squares, sign_constant)
+
+                x_offset = np.power(-1,(complete_squares + 1)) + ((distance_from_last_square - complete_squares - 1) * (np.power(-1, complete_squares)));
+                y_offset = -complete_squares * (np.power(-1, (complete_squares + 1)));
             
             y += y_offset
             x += x_offset
